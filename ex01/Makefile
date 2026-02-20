@@ -1,12 +1,26 @@
-NAME = phonebook
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: emuzun <emuzun@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/02/16 14:28:56 by emuzun            #+#    #+#              #
+#    Updated: 2026/02/16 14:28:57 by emuzun           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRCS = main.cpp phonebook.cpp
+NAME	= phonebook
 
-OBJS = $(SRCS:.cpp=.o)
+SRCS	= myAwesomePhoneBook.cpp \
+		  construct.cpp \
+		  get.cpp \
+		  set.cpp
 
-CXX = c++
+OBJS	= $(SRCS:.cpp=.o)
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXX		= c++
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 
