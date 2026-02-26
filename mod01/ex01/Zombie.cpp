@@ -1,5 +1,5 @@
 #include "Zombie.hpp"
-#include <iostream>
+
 
 Zombie::Zombie() : name(name) {}
 
