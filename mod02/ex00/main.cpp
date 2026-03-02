@@ -1,16 +1,16 @@
-#include <iostream>
-#include "Fixed.hpp"
+#include"Fixed.hpp"
 
-int main( void )
+int main()
 {
-    Fixed a;
-    Fixed b( a );
-    Fixed c;
-    c = b;
+    Fixed a; //Default constructor çağrısı. _Value 0
+    Fixed b(a); //Copy constructor çağrısı. a'yı kopyalar.
+    Fixed c; //Tekrar Default constructor çağrısı 
 
-    std::cout << a.getBits() << std::endl;
-    std::cout << b.getBits() << std::endl;
-    std::cout << c.getBits() << std::endl;
+    c = b; //Copy assignment operator çağrısı. b'yi c'ye atar.
+
+    std::cout << a.getRawBits() << std::endl; //getRawBits member function çağrısı. a'nın _value'sunu döndürür.
+    std::cout << b.getRawBits() << std::endl; //getRawBits
+    std::cout << c.getRawBits() << std::endl; //getRawBits
 
     return 0;
 }
