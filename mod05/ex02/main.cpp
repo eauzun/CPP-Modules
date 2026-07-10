@@ -5,48 +5,61 @@
 
 int main()
 {
-    std::srand(42); // sabit seed, tutarli output icin
-
-    std::cout << "=== ShrubberyCreationForm ===" << std::endl;
+    std::cout << "── Test 1: ShrubberyCreationForm ──\n";
     try {
-        Bureaucrat            b("Alice", 137);
-        ShrubberyCreationForm f("garden");
-        b.signForm(f);
-        b.executeForm(f);
-    } catch (std::exception& e) { std::cerr << e.what() << std::endl; }
+        Bureaucrat alice("Alice", 130);
+        ShrubberyCreationForm shrubbery("garden");
+        alice.signForm(shrubbery);
+        alice.executeForm(shrubbery); // dosya oluşturur: garden_shrubbery
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << "\n";
+    }
 
-    std::cout << "\n=== RobotomyRequestForm ===" << std::endl;
+    std::cout << "\n── Test 2: RobotomyRequestForm ──\n";
     try {
-        Bureaucrat          b("Bob", 45);
-        RobotomyRequestForm f("Bender");
-        b.signForm(f);
-        b.executeForm(f);
-        b.executeForm(f);
-    } catch (std::exception& e) { std::cerr << e.what() << std::endl; }
+        Bureaucrat bob("Bob", 40);
+        RobotomyRequestForm robotomy("Bender");
+        bob.signForm(robotomy);
+        bob.executeForm(robotomy); // %50 başarılı
+        bob.executeForm(robotomy); // bir kez daha dene
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << "\n";
+    }
 
-    std::cout << "\n=== PresidentialPardonForm ===" << std::endl;
+    std::cout << "\n── Test 3: PresidentialPardonForm ──\n";
     try {
-        Bureaucrat             b("Charlie", 5);
-        PresidentialPardonForm f("Ford Prefect");
-        b.signForm(f);
-        b.executeForm(f);
-    } catch (std::exception& e) { std::cerr << e.what() << std::endl; }
+        Bureaucrat zaphod("Zaphod", 4);
+        PresidentialPardonForm pardon("Ford");
+        zaphod.signForm(pardon);
+        zaphod.executeForm(pardon);
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << "\n";
+    }
 
-    std::cout << "\n=== Imzasiz form ===" << std::endl;
+    std::cout << "\n── Test 4: İmzasız form execute ──\n";
     try {
-        Bureaucrat             b("Dave", 1);
-        PresidentialPardonForm f("Arthur");
-        b.executeForm(f);
-    } catch (std::exception& e) { std::cerr << e.what() << std::endl; }
+        Bureaucrat carol("Carol", 1);
+        PresidentialPardonForm pardon("Arthur");
+        carol.executeForm(pardon); // imzalanmadı → hata
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << "\n";
+    }
 
-    std::cout << "\n=== Yetersiz execute grade ===" << std::endl;
+    std::cout << "\n── Test 5: Grade yetersiz execute ──\n";
     try {
-        Bureaucrat             signer("Eve", 25);
-        Bureaucrat             runner("Frank", 100);
-        PresidentialPardonForm f("Marvin");
-        signer.signForm(f);
-        runner.executeForm(f);
-    } catch (std::exception& e) { std::cerr << e.what() << std::endl; }
+        Bureaucrat lowly("Lowly", 150);
+        PresidentialPardonForm pardon("Trillian");
+        // imzalamak için grade 25 lazım, 150 yetersiz
+        lowly.signForm(pardon);
+        lowly.executeForm(pardon);
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << "\n";
+    }
 
     return 0;
 }

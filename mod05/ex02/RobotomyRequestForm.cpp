@@ -1,24 +1,43 @@
 #include "RobotomyRequestForm.hpp"
 
+RobotomyRequestForm::RobotomyRequestForm()
+    : AForm("RobotomyRequestForm", 72, 45), _target("default") {
+    std::cout << "RobotomyRequestForm default constructor called\n";
+}
+
 RobotomyRequestForm::RobotomyRequestForm(const std::string& target)
-    : AForm("RobotomyRequestForm", 72, 45), _target(target) {}
+    : AForm("RobotomyRequestForm", 72, 45), _target(target) {
+    std::cout << "RobotomyRequestForm parametric constructor called\n";
+}
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& o)
-    : AForm(o), _target(o._target) {}
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other)
+    : AForm(other), _target(other._target) {
+    std::cout << "RobotomyRequestForm copy constructor called\n";
+}
 
-RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o)
-{
-    if (this != &o) { AForm::operator=(o); _target = o._target; }
+RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other) {
+    std::cout << "RobotomyRequestForm copy assignment operator called\n";
+    if (this != &other) {
+        AForm::operator=(other);
+        _target = other._target;
+    }
     return *this;
 }
 
-RobotomyRequestForm::~RobotomyRequestForm() {}
+RobotomyRequestForm::~RobotomyRequestForm() {
+    std::cout << "RobotomyRequestForm destructor called\n";
+}
 
-void RobotomyRequestForm::executeAction() const
-{
-    std::cout << "Bzzzzzzzzz... *drilling noises*" << std::endl;
-    if (std::rand() % 2)
-        std::cout << _target << " robotomized successfully!" << std::endl;
+void RobotomyRequestForm::execute(Bureaucrat const& executor) const {
+    checkExecute(executor);
+
+    // matkap sesi
+    std::cout << "BZZZZZZZZZT DRRRRRRRR VRRRRRRM...\n";
+
+    // %50 ihtimalle başarılı
+    std::srand(std::time(0));
+    if (std::rand() % 2 == 0)
+        std::cout << _target << " has been robotomized successfully!\n";
     else
-        std::cout << _target << " robotomy failed." << std::endl;
+        std::cout << _target << " robotomy failed!\n";
 }

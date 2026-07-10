@@ -2,20 +2,22 @@
 # define ROBOTOMYREQUESTFORM_HPP
 
 # include "AForm.hpp"
-# include <cstdlib>
-# include <ctime>
+# include <cstdlib> // rand()
+# include <ctime>   // time()
 
 class RobotomyRequestForm : public AForm
 {
-public:
-    RobotomyRequestForm(const std::string& target);
-    RobotomyRequestForm(const RobotomyRequestForm& other);
-    RobotomyRequestForm& operator=(const RobotomyRequestForm& other);
-    ~RobotomyRequestForm();
-    void executeAction() const;
-private:
-    std::string _target;
-    RobotomyRequestForm();
+    private:
+        std::string _target;
+
+    public:
+        RobotomyRequestForm();
+        RobotomyRequestForm(const std::string& target);
+        RobotomyRequestForm(const RobotomyRequestForm& other);
+        RobotomyRequestForm& operator=(const RobotomyRequestForm& other);
+        ~RobotomyRequestForm();
+
+        void execute(Bureaucrat const& executor) const;
 };
 
 #endif

@@ -2,38 +2,58 @@
 # define AFORM_HPP
 
 # include <iostream>
-# include <stdexcept>
+# include <string>
 
-class Bureaucrat;
+class Bureaucrat; // forward declaration
 
 class AForm
 {
-public:
-    class GradeTooHighException  : public std::exception { public: const char* what() const throw(); };
-    class GradeTooLowException   : public std::exception { public: const char* what() const throw(); };
-    class FormNotSignedException : public std::exception { public: const char* what() const throw(); };
+    private:
+        const std::string _name;
+        bool              _isSigned;
+        const int         _gradeSign;
+        const int         _gradeExec;
 
-    AForm(const std::string& name, int gradeToSign, int gradeToExecute);
-    AForm(const AForm& other);
-    AForm& operator=(const AForm& other);
-    virtual ~AForm();
+    public:
+        // ── OCF ──────────────────────────────────────────────
+        AForm();
+        AForm(const std::string& name, int gradeSign, int gradeExec);
+        AForm(const AForm& other);
+        AForm& operator=(const AForm& other);
+        virtual ~AForm(); // virtual — miras alındığı için
 
-    const std::string&  getName()           const;
-    bool                getIsSigned()       const;
-    int                 getGradeToSign()    const;
-    int                 getGradeToExecute() const;
+        // ── Getters ──────────────────────────────────────────
+        const std::string& getName()      const;
+        bool               getIsSigned()  const;
+        int                getGradeSign() const;
+        int                getGradeExec() const;
 
-    void    beSigned(const Bureaucrat& b);
-    void    execute(const Bureaucrat& executor) const;
+        // ── İmzalama ─────────────────────────────────────────
+        void beSigned(const Bureaucrat& b);
 
-    virtual void executeAction() const = 0;
+        // ── Execute ───────────────────────────────────────────
+        // pure virtual → AForm abstract class oldu
+        virtual void execute(Bureaucrat const& executor) const = 0;
 
-private:
-    const std::string _name;
-    bool              _isSigned;
-    const int         _gradeToSign;
-    const int         _gradeToExecute;
-    AForm();
+        // base class'ta kontrol yapan yardımcı metod
+        // concrete class'lar execute() içinde bunu çağırır
+        void checkExecute(Bureaucrat const& executor) const;
+
+        // ── Nested exceptions ─────────────────────────────────
+        class GradeTooHighException : public std::exception {
+            public:
+                const char* what() const throw();
+        };
+
+        class GradeTooLowException : public std::exception {
+            public:
+                const char* what() const throw();
+        };
+
+        class FormNotSignedException : public std::exception {
+            public:
+                const char* what() const throw();
+        };
 };
 
 std::ostream& operator<<(std::ostream& os, const AForm& f);
