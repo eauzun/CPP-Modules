@@ -2,30 +2,50 @@
 
 int main()
 {
+    std::cout << "── Test 1: Normal oluşturma ──\n";
     try {
         Bureaucrat alice("Alice", 42);
-        std::cout << alice << std::endl;
-        alice.incrementGrade();
-        std::cout << "After increment: " << alice << std::endl;
-        alice.decrementGrade();
-        std::cout << "After decrement: " << alice << std::endl;
-    } catch (std::exception& e) { std::cerr << e.what() << std::endl; }
+        std::cout << alice << "\n"; // operator<< testi
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << "\n";
+    }
 
-    try { Bureaucrat bob("Bob", 0); }
-    catch (std::exception& e) { std::cerr << "Bob: " << e.what() << std::endl; }
-
-    try { Bureaucrat charlie("Charlie", 151); }
-    catch (std::exception& e) { std::cerr << "Charlie: " << e.what() << std::endl; }
-
+    std::cout << "\n── Test 2: Grade çok yüksek (0) ──\n";
     try {
-        Bureaucrat dave("Dave", 1);
-        dave.incrementGrade();
-    } catch (std::exception& e) { std::cerr << "Dave: " << e.what() << std::endl; }
+        Bureaucrat bad("Bad", 0); // GradeTooHighException bekliyoruz
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception caught: " << e.what() << "\n";
+    }
 
+    std::cout << "\n── Test 3: Grade çok düşük (151) ──\n";
     try {
-        Bureaucrat eve("Eve", 150);
-        eve.decrementGrade();
-    } catch (std::exception& e) { std::cerr << "Eve: " << e.what() << std::endl; }
+        Bureaucrat bad("Bad", 151); // GradeTooLowException bekliyoruz
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception caught: " << e.what() << "\n";
+    }
+
+    std::cout << "\n── Test 4: increment/decrement sınır testi ──\n";
+    try {
+        Bureaucrat top("Top", 1);
+        std::cout << top << "\n";
+        top.incrementGrade(); // grade 1'den daha yüksek olamaz → exception
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception caught: " << e.what() << "\n";
+    }
+
+    std::cout << "\n── Test 5: decrement sınır testi ──\n";
+    try {
+        Bureaucrat bot("Bot", 150);
+        std::cout << bot << "\n";
+        bot.decrementGrade(); // grade 150'den daha düşük olamaz → exception
+    }
+    catch (std::exception& e) {
+        std::cout << "Exception caught: " << e.what() << "\n";
+    }
 
     return 0;
 }
